@@ -128,4 +128,4 @@ For questions or feedback, reach out via [GitHub Issues](https://github.com/D-Ka
 
 ---
 
-> _Built with ❤️ by D-Karak and contributors_
+> _Built with ❤️ by D-Karak
