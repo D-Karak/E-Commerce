@@ -2,7 +2,7 @@ import axios from 'axios';
 import {loadStripe} from '@stripe/stripe-js';
 const stripePromise=loadStripe(import.meta.env.VITE_STRIPE_PUBLISHED_KEY)
 // console.log(import.meta.env.VITE_STRIPE_PUBLISHED_KEY)
- const API=import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000/api';
+ const API=`${import.meta.env.VITE_BASE_API_URL}`;
 
 export const checkout= async(product)=>{
     // console.log(product)

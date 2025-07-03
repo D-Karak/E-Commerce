@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API=import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000/api';
+const API=`${import.meta.env.VITE_BASE_API_URL}`;
 
 export const fetchReviews = async (productId, token) => {
   try{

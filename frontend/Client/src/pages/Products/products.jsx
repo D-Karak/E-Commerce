@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getProducts } from '../../API/Product/ProductApi';
 import {
@@ -40,7 +40,7 @@ export default function ProductsPage() {
   const [successToast, setSuccessToast] = useState(null);
   const [warningToast, setWarningToast] = useState(null);
   const [errorToast, setErrorToast] = useState(null);
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const categoryFilter = selectedCategory !== 'all' ? selectedCategory : '';
       const response = await getProducts(token, page, limit, categoryFilter);
@@ -52,11 +52,11 @@ export default function ProductsPage() {
       console.error('Failed to fetch products:', error);
       setErrorToast("Unable to load products.");
     }
-  };
+  },[selectedCategory, token, page, limit]);
 
   useEffect(() => {
     fetchProducts();
-  }, [selectedCategory, page]);
+  }, [fetchProducts,selectedCategory, page]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

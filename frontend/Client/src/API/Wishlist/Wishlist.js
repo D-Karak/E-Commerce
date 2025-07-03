@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API=import.meta.env.VITE_BASE_API_URL || 'http://localhost:5000/api';
+const API=`${import.meta.env.VITE_BASE_API_URL}`;
 
 export const addToWishlist = async (userId, productId, token)=>{
     try{
@@ -26,7 +26,7 @@ export const getUserWishlist = async (token)=>{
             }
         }
         const response = await axios.get(`${API}/wishlist/get`,config);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     }
     catch(error){

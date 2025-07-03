@@ -36,7 +36,7 @@ const createWishlist = async (req, res) => {
 const getUserWishlist = async (req, res) => {
     try {
         const userId = req.user.id; // Get userId from request parameters
-        // console.log(userId)
+        console.log(userId)
         // Find wishlist by userId
         const wishlist = await Wishlist.findOne({ userId: userId })
             .populate('items.productId', 'name price image stock');
