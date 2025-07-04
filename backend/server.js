@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+const webhookRoutes=require('./Routes/PaymentRoutes/webhookRoutes.js')
 const authRoutes = require("./Routes/authRoutes.js");
 const userRoutes = require("./Routes/userRoutes.js");
 const productRoutes = require("./Routes/Product Routes/productRoutes.js");
@@ -12,7 +13,6 @@ const cartRoutes = require("./Routes/CartRoutes/CartRoutes.js");
 const addressRoutes=require('./Routes/AddressRoutes/AddressRoutes.js')
 const paymentRoutes=require('./Routes/PaymentRoutes/StripeRoutes.js')
 const orderRoutes=require('./Routes/Order/OrderRoutes.js')
-const webhookRoutes=require('./Routes/PaymentRoutes/webhookRoutes.js')
 const wishlistRoutes=require('./Routes/Wishlist/WishlistRoutes.js')
 const reviewRoutes = require("./Routes/ReviewRoutes/reviewRoutes.js");
 //MongoDB connection
@@ -35,7 +35,7 @@ app.use('/api/wishlist',wishlistRoutes)//Wishlist Routes
 app.use("/api/reviews", reviewRoutes);
 
 // Then later you can use JSON for all other routes
-app.use(express.json());
+// app.use(express.json());
 
 //Demo Routes
 app.get("/", (req, res) => {
