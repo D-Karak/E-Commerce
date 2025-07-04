@@ -136,6 +136,7 @@ export default function NavigationBar(props) {
                   sx={{
                     fontFamily: 'Montserrat, sans-serif',
                     fontWeight: 500,
+                    fontSize: "1em",
                     color: isHomepage ? 'white' : 'black',
                   }}
                 >

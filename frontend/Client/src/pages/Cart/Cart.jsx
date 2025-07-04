@@ -32,28 +32,28 @@ const CartPage = () => {
   const gst = (subtotal * 18) / 100;
   const total = subtotal + gst;
 
-// const handleQuantityInputChange = (itemId, value) => {
-//   const updatedItems = cartItems.map(item => {
-//     if (item._id === itemId) {
-//       const numericValue = parseInt(value, 10);
+  // const handleQuantityInputChange = (itemId, value) => {
+  //   const updatedItems = cartItems.map(item => {
+  //     if (item._id === itemId) {
+  //       const numericValue = parseInt(value, 10);
 
-//       // Fallback if stock is nested under item.product
-//       const stock = item.stock || item.product?.stock || 0;
+  //       // Fallback if stock is nested under item.product
+  //       const stock = item.stock || item.product?.stock || 0;
 
-//       // Validate input
-//       if (isNaN(numericValue) || numericValue < 1) {
-//         return { ...item, quantity: 1 }; // default to 1 if invalid
-//       } else if (numericValue > stock) {
-//         return { ...item, quantity: stock }; // max allowed quantity
-//       } else {
-//         return { ...item, quantity: numericValue };
-//       }
-//     }
-//     return item;
-//   });
+  //       // Validate input
+  //       if (isNaN(numericValue) || numericValue < 1) {
+  //         return { ...item, quantity: 1 }; // default to 1 if invalid
+  //       } else if (numericValue > stock) {
+  //         return { ...item, quantity: stock }; // max allowed quantity
+  //       } else {
+  //         return { ...item, quantity: numericValue };
+  //       }
+  //     }
+  //     return item;
+  //   });
 
-//   setCartItems(updatedItems);
-// };
+  //   setCartItems(updatedItems);
+  // };
 
 
   // const handleQuantityBlur = async (itemId) => {
@@ -134,14 +134,14 @@ const CartPage = () => {
                 Shopping Cart ({cartItems.length} items)
               </Typography>
               <Divider sx={{ mb: 4 }} />
-              
+
               {cartItems.length === 0 ? (
                 <div className='text-center py-12'>
                   <Typography variant="h6" color="textSecondary" className='mb-4'>
                     Your cart is empty
                   </Typography>
-                  <Button 
-                    variant="outlined" 
+                  <Button
+                    variant="outlined"
                     color="primary"
                     onClick={() => navigate('/products')}
                   >
@@ -149,47 +149,72 @@ const CartPage = () => {
                   </Button>
                 </div>
               ) : (
-                <div className='space-y-4'>
+                <div className="space-y-4">
                   {cartItems.map((item) => (
                     <Paper
                       key={item._id}
                       elevation={0}
                       sx={{
                         display: 'flex',
-                        alignItems: 'center',
+                        flexDirection: {
+                          xs: 'column', // Stack on mobile
+                          sm: 'row',    // Row layout on tablets and up
+                        },
+                        alignItems: {
+                          xs: 'flex-start',
+                          sm: 'center',
+                        },
                         p: 3,
+                        gap: 2,
                         border: '1px solid #e5e7eb',
                         borderRadius: 2,
                         '&:hover': {
                           boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-                          transition: 'all 0.3s ease'
-                        }
+                          transition: 'all 0.3s ease',
+                        },
                       }}
                     >
+                      {/* Product Image */}
                       <Box
                         component="img"
-                        src={item.productId?.image || "https://via.placeholder.com/100"}
+                        src={item.productId?.image || 'https://via.placeholder.com/100'}
                         alt={item.name}
-                        sx={{ 
-                          width: 120, 
-                          height: 120, 
-                          objectFit: 'cover', 
-                          borderRadius: 2, 
-                          mr: 3 
+                        sx={{
+                          width: 120,
+                          height: 120,
+                          objectFit: 'cover',
+                          borderRadius: 2,
+                          mr: { xs: 0, sm: 3 },
+                          mb: { xs: 2, sm: 0 },
                         }}
                       />
-                      
-                      <Box sx={{ flexGrow: 1 }}>
-                        <Typography variant="h6" className='text-gray-800 mb-1'>
+
+                      {/* Product Details */}
+                      <Box sx={{ flexGrow: 1, width: '100%' }}>
+                        <Typography variant="h6" className="text-gray-800 mb-1">
                           {item.productId?.name}
                         </Typography>
-                        <Typography variant="body2" className='text-gray-500 mb-2'>
+                        <Typography variant="body2" className="text-gray-500 mb-2">
                           Unit Price: ₹{item.price}
                         </Typography>
-                        
+
                         {/* Quantity Controls */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', border: '1px solid #e5e7eb', borderRadius: 1 }}>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            alignItems: 'center',
+                            gap: 2,
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: 1,
+                            }}
+                          >
                             <IconButton
                               size="small"
                               onClick={() => handleDecreaseQuantity(item._id)}
@@ -208,18 +233,25 @@ const CartPage = () => {
                               <AddShoppingCartIcon fontSize="small" />
                             </IconButton>
                           </Box>
-                          
-                          <Typography variant="body2" className='text-gray-500'>
+
+                          <Typography variant="body2" className="text-gray-500">
                             {item.productId.stock} available
                           </Typography>
                         </Box>
                       </Box>
-                      
-                      <Box sx={{ textAlign: 'right' }}>
-                        <Typography variant="h6" className='text-gray-800 mb-2'>
+
+                      {/* Price & Remove Button */}
+                      <Box
+                        sx={{
+                          textAlign: { xs: 'left', sm: 'right' },
+                          mt: { xs: 2, sm: 0 },
+                          width: { xs: '100%', sm: 'auto' },
+                        }}
+                      >
+                        <Typography variant="h6" className="text-gray-800 mb-2">
                           ₹{(item.price * item.quantity).toFixed(2)}
                         </Typography>
-                        <IconButton 
+                        <IconButton
                           onClick={() => handleRemoveItem(item._id)}
                           color="error"
                           size="small"
@@ -259,19 +291,19 @@ const CartPage = () => {
                   <Typography variant="body1">Subtotal</Typography>
                   <Typography variant="body1">₹{subtotal.toFixed(2)}</Typography>
                 </div>
-                
+
                 <div className='flex justify-between text-gray-600'>
                   <Typography variant="body1">GST (18%)</Typography>
                   <Typography variant="body1">₹{gst.toFixed(2)}</Typography>
                 </div>
-                
+
                 <div className='flex justify-between text-gray-600'>
                   <Typography variant="body1">Shipping</Typography>
                   <Typography variant="body1" className='text-green-600'>FREE</Typography>
                 </div>
-                
+
                 <Divider />
-                
+
                 <div className='flex justify-between'>
                   <Typography variant="h6" className='text-gray-800'>Total</Typography>
                   <Typography variant="h6" className='text-gray-800'>
@@ -304,11 +336,11 @@ const CartPage = () => {
                   textTransform: 'none'
                 }}
               >
-                {cartItems.length === 0 
-                  ? 'Add items to cart' 
-                  : !selectedAddress 
-                  ? 'Select delivery address' 
-                  : 'Proceed to Payment'}
+                {cartItems.length === 0
+                  ? 'Add items to cart'
+                  : !selectedAddress
+                    ? 'Select delivery address'
+                    : 'Proceed to Payment'}
               </Button>
 
               {/* Security Badge */}
@@ -322,5 +354,6 @@ const CartPage = () => {
         </div>
       </div>
     </div>
-  )}
+  )
+}
 export default CartPage;
